@@ -38,9 +38,12 @@ class SequenceToSequence(tf.keras.Model):
             # Teachering Forcing
             """
             应用decoder来一步一步预测生成词语概论分布
-            your code
             如：xxx = self.decoder(), 采用Teachering Forcing方法
             """
+            _pred,dec_hidden = self.decoder(tf.expand_dims(dec_inp[:,t],1),
+                                            dec_hidden,
+                                            enc_output,
+                                            context_vector)
             context_vector, attn_dist = self.attention(dec_hidden, enc_output)
             
             predictions.append(pred)

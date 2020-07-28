@@ -52,9 +52,8 @@ def build_vocab(items, sort=True, min_count=0, lower=False):
         # sort
         """
         按照字典里的词频进行排序，出现次数多的排在前面
-        your code(one line)
         """
-        dict(sorted(dic.items(),key=lambda item:item[1],reverse=True))
+        dic = dict(sorted(dic.items(),key=lambda item:item[1],reverse=True))
         for key, val in dic.items():
             #key = item[0]
             if min_count and min_count > val:
@@ -67,9 +66,6 @@ def build_vocab(items, sort=True, min_count=0, lower=False):
             result.append(item)
     """
     建立项目的vocab和reverse_vocab，vocab的结构是（词，index）
-    your code
-    vocab = (one line)
-    reverse_vocab = (one line)
     """
     #print(result[0])
     vocab = (item + ' ' + str(i) for i,item in enumerate(result))
