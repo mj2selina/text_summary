@@ -31,7 +31,7 @@ class SequenceToSequence(tf.keras.Model):
         enc_output, enc_hidden = self.encoder(enc_inp, enc_hidden)
         return enc_output, enc_hidden
     
-    def call(self, enc_output, dec_inp, dec_hidden, dec_tar):
+    def call(self, enc_output, dec_inp, dec_hidden, dec_tar):#dec_input,dec_hidden,dec_target
         predictions = []
         attentions = []
         context_vector, _ = self.attention(dec_hidden,  # shape=(16, 256)

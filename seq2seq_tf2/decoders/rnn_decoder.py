@@ -24,10 +24,13 @@ class BahdanauAttention(tf.keras.layers.Layer):
         # att_features = self.W1(enc_output) + self.W2(hidden_with_time_axis)
 
         # Calculate v^T tanh(W_h h_i + W_s s_t + b_attn)
+
+        #self_attention:score = softmax(query*key/8)*value，query=dec_hidden,key=encoder_output
         """
         定义score
         """
-        score = tf.matmul(tf.transpose(self.V), tf.tanh(tf.matmul(self.W1,hidden_with_time_axis) + tf.matmul(self.W2, enc_output)))
+        #(batch size，encoder seq length，1)
+        score = tf.matmul(tf.transpose(self.V), tf.tanh(tf.matmul(self.W1,enc_output) + tf.matmul(self.W2, hidden_with_time_axis)))
         # Calculate attention distribution
         """
         归一化score，得到attn_dist
@@ -51,7 +54,7 @@ class Decoder(tf.keras.layers.Layer):
         """
         定义单向的RNN、GRU、LSTM层
         """
-        self.gru = tf.keras.layers.GRU(units=dec_units)
+        self.gru = tf.keras.layers.LSTM(units=dec_units)
         # self.dropout = tf.keras.layers.Dropout(0.5)
         """
         定义最后的fc层，用于预测词的概率

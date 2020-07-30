@@ -13,9 +13,9 @@ class Encoder(tf.keras.layers.Layer):
         # tf.keras.layers.GRU自动匹配cpu、gpu
         """
         定义单向的RNN、GRU、LSTM层
-        
         """
-        self.gru = tf.keras.layers.LSTM(units=self.enc_units)
+        self.gru = tf.keras.layers.LSTM(units=self.enc_units,
+                                        dropout=0.1)
         self.bigru = tf.keras.layers.Bidirectional(self.gru, merge_mode='concat')
 
     def call(self, x, hidden):
