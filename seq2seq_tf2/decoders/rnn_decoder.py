@@ -47,7 +47,7 @@ class Decoder(tf.keras.layers.Layer):
         """
         定义Embedding层，加载预训练的词向量
         """
-        self.embedding = tf.keras.layers.Embedding(vocab_size,embedding_dim,embeddings_initializer=embedding_matrix)
+        self.embedding = tf.keras.layers.Embedding(vocab_size,embedding_dim,weights=[embedding_matrix])
         """
         定义单向的RNN、GRU、LSTM层
         """

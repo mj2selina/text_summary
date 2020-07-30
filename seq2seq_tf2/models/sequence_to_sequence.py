@@ -1,3 +1,6 @@
+import sys
+print(sys.path)
+sys.path.append("/home/majun03/program/text_summary")
 import tensorflow as tf
 from seq2seq_tf2.encoders import rnn_encoder
 from seq2seq_tf2.decoders import rnn_decoder
@@ -46,7 +49,10 @@ class SequenceToSequence(tf.keras.Model):
                                             context_vector)
             context_vector, attn_dist = self.attention(dec_hidden, enc_output)
             
-            predictions.append(pred)
+            predictions.append(_pred)
             attentions.append(attn_dist)
 
         return tf.stack(predictions, 1), dec_hidden
+
+#if __name__=="__main__":
+    
