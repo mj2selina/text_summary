@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from gensim.models import Word2Vec
 from gensim.models.word2vec import LineSentence
 from gensim.models.keyedvectors import KeyedVectors
@@ -43,24 +42,18 @@ def build(train_x_seg_path, test_y_seg_path, test_seg_path, out_path=None, sente
     save_sentence(sentences, sentence_path)
     print('train w2v model...')
     # train model
-    """
-    通过gensim工具完成word2vec的训练，输入格式采用sentences，使用skip-gram，embedding维度256
-    your code
-    w2v = （one line）
-    """
-    w2v = Word2Vec(sentences=LineSentence(sentence_path),size=256,sg=1)
+    w2v = Word2Vec(sg=1, sentences=LineSentence(sentence_path),
+                   size=256, window=5, min_count=min_count, iter=40)
     w2v.wv.save_word2vec_format(w2v_bin_path, binary=True)
     print("save %s ok." % w2v_bin_path)
     # test
-    #sim = w2v.wv.similarity('技师', '车主')
-    #print('技师 vs 车主 similarity score:', sim)
+    sim = w2v.wv.similarity('技师', '车主')
+    print('技师 vs 车主 similarity score:', sim)
     # load model
     model = KeyedVectors.load_word2vec_format(w2v_bin_path, binary=True)
     word_dict = {}
     for word in model.vocab:
         word_dict[word] = model[word]
-    print(word_dict['你好'])
-    #print(len(word_dict['你好'].split(' ')))
     dump_pkl(word_dict, out_path, overwrite=True)
 
 

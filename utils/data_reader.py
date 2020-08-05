@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from collections import defaultdict
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -7,8 +6,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def save_word_dict(vocab, save_path):
     with open(save_path, 'w', encoding='utf-8') as f:
         for line in vocab:
-            items = line.split(' ')
-            w, i = items[0],int(items[1])
+            w, i = line
             f.write("%s\t%d\n" % (w, i))
 
 
@@ -50,13 +48,10 @@ def build_vocab(items, sort=True, min_count=0, lower=False):
                 i = i if not lower else item.lower()
                 dic[i] += 1
         # sort
-        """
-        按照字典里的词频进行排序，出现次数多的排在前面
-        """
-        dic = dict(sorted(dic.items(),key=lambda item:item[1],reverse=True))
-        for key, val in dic.items():
-            #key = item[0]
-            if min_count and min_count > val:
+        dic = sorted(dic.items(), key=lambda d: d[1], reverse=True)
+        for i, item in enumerate(dic):
+            key = item[0]
+            if min_count and min_count > item[1]:
                 continue
             result.append(key)
     else:
@@ -64,12 +59,10 @@ def build_vocab(items, sort=True, min_count=0, lower=False):
         for i, item in enumerate(items):
             item = item if not lower else item.lower()
             result.append(item)
-    """
-    建立项目的vocab和reverse_vocab，vocab的结构是（词，index）
-    """
-    #print(result[0])
-    vocab = (item + ' ' + str(i) for i,item in enumerate(result))
-    reverse_vocab = (str(i) + ' ' + item for i,item in enumerate(result))
+
+    vocab = [(w, i) for i, w in enumerate(result)]
+    reverse_vocab = [(i, w) for i, w in enumerate(result)]
+
     return vocab, reverse_vocab
 
 
