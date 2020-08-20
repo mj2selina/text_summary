@@ -48,8 +48,6 @@ class BahdanauAttentionCoverage(tf.keras.layers.Layer):
             # shape (batch_size,attn_length)
             """
             改造seq2seq中的score，加入coverge
-            your code
-            e = ...
             """
             e = self.V(tf.nn.tanh(self.W1(enc_output) + self.W2(hidden_with_time_axis) + self.Wc(prev_coverage)))
             # Calculate attention distribution
@@ -122,7 +120,5 @@ class Pointer(tf.keras.layers.Layer):
     def call(self, context_vector, state, dec_inp):
         """
         return Pen系数
-        your code
-        return ...
         """
         return tf.nn.sigmoid(self.w_c_reduce(context_vector) + self.w_s_reduce(state) + self.w_i_reduce(dec_inp))

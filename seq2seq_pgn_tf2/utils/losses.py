@@ -80,10 +80,8 @@ def _coverage_loss(attn_dists, padding_mask):
     for a in attn_dists:
         """
         定义coverge loss
-        your code
-        covloss = ...
         """
-        covloss = 
+        covloss = tf.reduce_sum(tf.minimum(a,coverage),[1])
         covlosses.append(covloss)
         coverage += a  # update the coverage vector
     coverage_loss = _mask_and_avg(covlosses, padding_mask)

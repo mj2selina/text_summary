@@ -38,7 +38,6 @@ class PGN(tf.keras.Model):
         p_gens = []
         """
         通过调用attention得到decoder第一步所需的context_vector，coverage等值
-        your code
         """
         context_vector, attn_dist, coverage_next = self.attention(dec_hidden, 
                                                                   enc_output, 
@@ -64,8 +63,6 @@ class PGN(tf.keras.Model):
         
         """
         调用calc_final_dist函数完成PGN最终预测概率输出
-        your code
-        _enc_batch_extend_vocab, vocab_dists, attn_dists, p_gens, batch_oov_len, vocab_size, batch_size
         """
         final_dists = decoding.calc_final_dist(enc_extended_inp,
                                                predictions,
